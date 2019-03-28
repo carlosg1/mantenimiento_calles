@@ -6,6 +6,9 @@ $permitido = 'NO';
 
 if($username=='carlosg' && $password=='147') $permitido = 'SI';
 if($username=='dario' && $password=='147') $permitido = 'SI';
+if($username=='romina' && $password=='147') $permitido = 'SI';
+if($username=='dario' && $password=='147') $permitido = 'SI';
+if($username=='dario' && $password=='147') $permitido = 'SI';
 
 if($permitido=='SI'){
 

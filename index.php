@@ -114,14 +114,13 @@ if($_SESSION['validado']!='SI'){
             format: 'image/png',
             //uppercase: true,
             transparent: true,
-            version: '1.1.0',
+            version: '1.1.1',
             //continuousWorld : true,
             tiled: true,
             attribution: "Direccion Gral de GIS",
             info_format: 'application/json',
             opacity: 1
         });
-
 
         var lyr_perfilado = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_perfilado");
         let lyr_perfilado2019 = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_perfilado_2019");
