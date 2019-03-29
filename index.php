@@ -68,10 +68,14 @@ if($_SESSION['validado']!='SI'){
         <script>
 
         var map = L.map('map', {
+            //center: [-27.49,-58.82],
             zoomControl: true, 
             maxZoom: 25, 
             minZoom: 1
-        }).fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6474398294]]);
+        }).fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6404398294]]);
+        //.fitBounds([[-27.54,-58.87],[-27.43,-58.72]]);
+        // .fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6404398294]]);
+        // -58.87,-27.54 / -58.72,-27.43
         
         var hash = new L.Hash(map);
         //L.control.attribution({prefix: false, position: 'bottomlef'});
@@ -112,10 +116,10 @@ if($_SESSION['validado']!='SI'){
 
         var servicioWMS = new wms_GIS("http://172.25.8.80:8080/geoserver/mantenimiento_calle_2019/wms?", {
             format: 'image/png',
-            //uppercase: true,
+            uppercase: true,
             transparent: true,
             version: '1.1.1',
-            //continuousWorld : true,
+            continuousWorld : true,
             tiled: true,
             attribution: "Direccion Gral de GIS",
             info_format: 'application/json',
@@ -163,7 +167,7 @@ if($_SESSION['validado']!='SI'){
             '<b>Perfilado de Calles (completo)</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_Masde3Intervenciones2.png" /></td><td>Mas de 3 Intervenciones</td></tr></table></div>': lyr_perfilado,
             '<b>Zonas de mantenimiento</b><div style="padding-left: 13px;"><span><img src="legend/zona_mantenimiento.png" /></span> Zonas de mantenimiento 2019</div>"': lyr_zona_mantenimiento,
         },{
-            collapsed:false
+            collapsed:true
         }).addTo(map);
 
         setBounds();
