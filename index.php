@@ -44,6 +44,10 @@ if($_SESSION['validado']!='SI'){
             left: 55px;
             top: 10px;
         }
+        .leaflet-control-layers{
+            opacity:0.9!important;
+            filter: alpha(opacity=30); /* para IE8 y posterior */
+        }
         </style>
         <title></title>
     </head>
@@ -99,7 +103,7 @@ if($_SESSION['validado']!='SI'){
             opacity: 1.0
         });
         
-        var overlay_CapabaseGIS_0 = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version=1.1.1&", "wvca", {
+        var overlay_CapabaseGIS_0 = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version=1.3.0&", "wvca", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -116,7 +120,7 @@ if($_SESSION['validado']!='SI'){
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            version: '1.1.1',
+            version: '1.3.0',
             continuousWorld : true,
             tiled: true,
             attribution: "Direccion Gral de GIS",
@@ -128,7 +132,7 @@ if($_SESSION['validado']!='SI'){
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            version: '1.1.1',
+            version: '1.3.0',
             continuousWorld : true,
             tiled: true,
             attribution: "Direccion Gral de GIS",
@@ -147,18 +151,9 @@ if($_SESSION['validado']!='SI'){
 
         var lyr_callePorTipoCalzada = WMS50.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
 
-        var lyr_zona_mantenimiento = L.WMS.layer("http://172.25.8.80:8080/geoserver/wms?version=1.1.1&", "mantenimiento_calle_2019:vw_zona_mantenimiento_calle", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            continuousWorld : true,
-            tiled: true,
-            info_format: 'text/html',
-            opacity: 1
-        });
-
-        /* Calles por tipo de calzada */
-/*        var lyr_callePorTipoCalzada = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version=1.1.1&", "w_red_vial:vw_ide_calle_por_tipo_calzada", {
+        var lyr_zona_mantenimiento = servicioWMS.getLayer("mantenimiento_calle_2019:vw_zona_mantenimiento_calle");
+/*
+        var lyr_zona_mantenimiento = L.WMS.layer("http://172.25.8.80:8080/geoserver/wms?", "mantenimiento_calle_2019:vw_zona_mantenimiento_calle", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -190,7 +185,7 @@ if($_SESSION['validado']!='SI'){
             
             '<b>Perfilado de Calles (completo)</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_Masde3Intervenciones2.png" /></td><td>Mas de 3 Intervenciones</td></tr></table></div>': lyr_perfilado,
 
-            '<b>Calle por tipo de calzada</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/calle_por_tipo_calzada.png" /></td></tr></table></div>': lyr_callePorTipoCalzada,
+            '<b>Calle por tipo de calzada</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/calle_por_tipo_calzada.png" /></td></tr></table></div>': lyr_callePorTipoCalzada, 
 
             '<b>Zonas de mantenimiento</b><div style="padding-left: 13px;"><span><img src="legend/zona_mantenimiento.png" /></span> Zonas de mantenimiento 2019</div>"': lyr_zona_mantenimiento,
         },{

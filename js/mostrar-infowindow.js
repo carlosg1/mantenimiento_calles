@@ -12,6 +12,13 @@ var wms_GIS = L.WMS.Source.extend({
         //info = '<div>Plan Hidrico - Restitucion de pluviales</div>' + info;
   
         var datos = JSON.parse(info);
+
+        /* que layer */
+        var queLayer = datos.features[0].id.split('.');
+
+        if (queLayer[0] === "vw_ide_calle_por_tipo_calzada") { return false; };
+
+        if (queLayer[0] === "vw_zona_mantenimiento_calle") { return false; };
         
         /* si hace click en la capa de calles por tipo de calzada, no muestra el infowindow */
         if (datos.features[0].properties['FNA_BARIOS'] !== undefined) { return false; };
