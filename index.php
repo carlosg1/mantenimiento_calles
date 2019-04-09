@@ -68,14 +68,12 @@ if($_SESSION['validado']!='SI'){
         <script>
 
         var map = L.map('map', {
+            drawControl: true,
             //center: [-27.49,-58.82],
             zoomControl: true, 
             maxZoom: 25, 
             minZoom: 1
         }).fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6404398294]]);
-        //.fitBounds([[-27.54,-58.87],[-27.43,-58.72]]);
-        // .fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6404398294]]);
-        // -58.87,-27.54 / -58.72,-27.43
         
         var hash = new L.Hash(map);
         //L.control.attribution({prefix: false, position: 'bottomlef'});
@@ -101,7 +99,7 @@ if($_SESSION['validado']!='SI'){
             opacity: 1.0
         });
         
-        var overlay_CapabaseGIS_0 = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version1.3.0&", "wvca", {
+        var overlay_CapabaseGIS_0 = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version=1.1.1&", "wvca", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -126,6 +124,18 @@ if($_SESSION['validado']!='SI'){
             opacity: 1
         });
 
+        var WMS50 = new wms_GIS("http://172.25.50.50:8080/geoserver/wms?", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            version: '1.1.1',
+            continuousWorld : true,
+            tiled: true,
+            attribution: "Direccion Gral de GIS",
+            info_format: 'application/json',
+            opacity: 1
+        });
+
         var lyr_perfilado = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_perfilado");
         let lyr_perfilado2019 = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_perfilado_2019");
 
@@ -135,7 +145,9 @@ if($_SESSION['validado']!='SI'){
         var lyr_cuneteo = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_cuneteo");
         var lyr_cuneteo2019 = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_cuneteo_2019");
 
-        var lyr_zona_mantenimiento = L.WMS.layer("http://172.25.8.80:8080/geoserver/wms?version1.1.0&", "mantenimiento_calle_2019:vw_zona_mantenimiento_calle", {
+        var lyr_callePorTipoCalzada = WMS50.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
+
+        var lyr_zona_mantenimiento = L.WMS.layer("http://172.25.8.80:8080/geoserver/wms?version=1.1.1&", "mantenimiento_calle_2019:vw_zona_mantenimiento_calle", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -145,6 +157,17 @@ if($_SESSION['validado']!='SI'){
             opacity: 1
         });
 
+        /* Calles por tipo de calzada */
+/*        var lyr_callePorTipoCalzada = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version=1.1.1&", "w_red_vial:vw_ide_calle_por_tipo_calzada", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1
+        });
+*/
         var osmGeocoder = new L.Control.OSMGeocoder({
             collapsed: false,
             position: 'topleft',
@@ -164,10 +187,14 @@ if($_SESSION['validado']!='SI'){
             '<b>Reconstruccion de calzada 2019</b><div style="padding-left: 13px;"><span><img src="legend/reconstruccion2019.png" /></span> Solo Año 2019</div>': lyr_reconstruccion2019,
             '<b>Reconstruccion de calzada (completo)</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/Reconstrucciondecordones_3_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/Reconstrucciondecordones_3_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/Reconstrucciondecordones_3_Masde3Intervenciones2.png" /></td><td> Mas de 3 Intervenciones</td></tr></table></div>': lyr_reconstruccion,
             '<b>Perfilado de calles 2019</b><div style="padding-left: 13px;"><span><img src="legend/perfilado2019.png" /></span> Solo Año 2019</div>': lyr_perfilado2019, 
+            
             '<b>Perfilado de Calles (completo)</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_Masde3Intervenciones2.png" /></td><td>Mas de 3 Intervenciones</td></tr></table></div>': lyr_perfilado,
+
+            '<b>Calle por tipo de calzada</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/calle_por_tipo_calzada.png" /></td></tr></table></div>': lyr_callePorTipoCalzada,
+
             '<b>Zonas de mantenimiento</b><div style="padding-left: 13px;"><span><img src="legend/zona_mantenimiento.png" /></span> Zonas de mantenimiento 2019</div>"': lyr_zona_mantenimiento,
         },{
-            collapsed:true
+            collapsed:false
         }).addTo(map);
 
         setBounds();

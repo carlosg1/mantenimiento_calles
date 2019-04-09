@@ -12,6 +12,9 @@ var wms_GIS = L.WMS.Source.extend({
         //info = '<div>Plan Hidrico - Restitucion de pluviales</div>' + info;
   
         var datos = JSON.parse(info);
+        
+        /* si hace click en la capa de calles por tipo de calzada, no muestra el infowindow */
+        if (datos.features[0].properties['FNA_BARIOS'] !== undefined) { return false; };
 
         if(datos.features[0].properties['ultima_fecha_reconstruccion'] != undefined){
             var datos1 = '<div style="width:360px; color: #ecb85b;"><h5>RECONSTRUCCION DE CALZADA</h5></div>';
