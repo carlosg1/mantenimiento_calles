@@ -45,7 +45,7 @@ if($_SESSION['validado']!='SI'){
             top: 10px;
         }
         .leaflet-control-layers{
-            opacity:0.9!important;
+            opacity:0.85!important;
             filter: alpha(opacity=30); /* para IE8 y posterior */
         }
         </style>
@@ -80,8 +80,7 @@ if($_SESSION['validado']!='SI'){
         }).fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6404398294]]);
         
         var hash = new L.Hash(map);
-        //L.control.attribution({prefix: false, position: 'bottomlef'});
-
+        
         map.attributionControl.addAttribution(false);
         map.attributionControl.getContainer().innerHTML='<?php echo 'Usuario: ' . $_SESSION['usuario'] . ' - '; ?>'+'<a href="http://gis.ciudaddecorrientes.gov.ar" target="_blank">Direccion Gral de SIG</a>';
         
@@ -152,17 +151,7 @@ if($_SESSION['validado']!='SI'){
         var lyr_callePorTipoCalzada = WMS50.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
 
         var lyr_zona_mantenimiento = servicioWMS.getLayer("mantenimiento_calle_2019:vw_zona_mantenimiento_calle");
-/*
-        var lyr_zona_mantenimiento = L.WMS.layer("http://172.25.8.80:8080/geoserver/wms?", "mantenimiento_calle_2019:vw_zona_mantenimiento_calle", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            continuousWorld : true,
-            tiled: true,
-            info_format: 'text/html',
-            opacity: 1
-        });
-*/
+
         var osmGeocoder = new L.Control.OSMGeocoder({
             collapsed: false,
             position: 'topleft',
@@ -193,6 +182,8 @@ if($_SESSION['validado']!='SI'){
         }).addTo(map);
 
         setBounds();
+
+        L.control.scale().addTo(map);
 
         function fSalir(){
             document.location='salir/';

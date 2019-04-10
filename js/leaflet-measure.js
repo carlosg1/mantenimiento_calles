@@ -3720,7 +3720,7 @@ i18n.registerMethods = function (helpers, req) {
 };
 
 i18n.prototype = {
-	defaultLocale: "en",
+	defaultLocale: "es",
 	extension: ".js",
 	directory: "./locales",
 	cookieName: "lang",
