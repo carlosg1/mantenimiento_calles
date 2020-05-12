@@ -1,21 +1,21 @@
 <?php
-session_name('mapa_gis');
-session_start();
-/*
-var_dump($_SESSION);
-exit; 
-*/
-if(!isset($_SESSION['validado'])){
-    echo 'Acceso no autorizado';
-    header('location: login/');
-    exit;
-}
+    session_name('mapa_gis');
+    session_start();
+    /*
+    var_dump($_SESSION);
+    exit; 
+    */
+    if(!isset($_SESSION['validado'])){
+        echo 'Acceso no autorizado';
+        header('location: login/');
+        exit;
+    }
 
-if($_SESSION['validado']!='SI'){
-    echo 'Acceso no autorizado';
-    header('location: login/');
-    exit;
-}
+    if($_SESSION['validado']!='SI'){
+        echo 'Acceso no autorizado';
+        header('location: login/');
+        exit;
+    }
 
 ?><!doctype html>
 <html lang="en">
@@ -29,30 +29,76 @@ if($_SESSION['validado']!='SI'){
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/Control.OSMGeocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+         -->
+
+         <!-- Google Fonts -->
+         <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+
         <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-        #map { cursor: default; }
-        .salir {
-            z-index: 1500;
-            position: absolute;
-            left: 55px;
-            top: 10px;
-        }
-        .leaflet-control-layers{
-            opacity:0.85!important;
-            filter: alpha(opacity=30); /* para IE8 y posterior */
-        }
+            html, body, #map {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            #map { cursor: default; }
+            .salir {
+                z-index: 1500;
+                position: absolute;
+                left: 55px;
+                top: 10px;
+            }
+            .leaflet-control-layers{
+                opacity:0.85!important;
+                filter: alpha(opacity=30); /* para IE8 y posterior */
+            }
+            .sp { 
+                color: blue; 
+                font-weight: 600;
+                text-family: 'Roboto';
+                }
+            .tub {
+                color: #668A42;
+            }
+            .infor {
+                position:absolute;
+                bottom: 10px;
+                left: 10px;
+                height: 450px;
+                width: 480px;
+                visibility:hidden;
+                border: solid 2px #000;
+                z-index: 2000;
+                background-color: #fff;
+            }
+            .infor .card .card-body h5 {
+                font-family: 'Righteous', cursive;
+                font-size: 24pt;
+            }
         </style>
         <title></title>
     </head>
     <body>
         <button type="button" class="btn btn-info salir" id="btnSalir">Salir</button>
+
+        <!-- Cuadro para el infowindow -->
+        <div class="infor">
+            <div class="card">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 id="card-titulo" class="card-title">Servicio Publico</h5>
+                    <div id="card-contendido">
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cuadro para el infowindow -->
 
         <div id="map"></div>
 
@@ -102,7 +148,7 @@ if($_SESSION['validado']!='SI'){
             opacity: 1.0
         });
         
-        var overlay_CapabaseGIS_0 = L.WMS.layer("http://172.25.50.50:8080/geoserver/wms?version=1.3.0&", "wvca", {
+        var overlay_CapabaseGIS_0 = L.WMS.layer("http://192.168.10.51:8282/geoserver/wms?version=1.3.0&", "capa_base_mcc:capa_base", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -126,7 +172,7 @@ if($_SESSION['validado']!='SI'){
             info_format: 'application/json',
             opacity: 1
         });
-
+/*
         var WMS50 = new wms_GIS("http://172.25.50.50:8080/geoserver/wms?", {
             format: 'image/png',
             uppercase: true,
@@ -138,17 +184,32 @@ if($_SESSION['validado']!='SI'){
             info_format: 'application/json',
             opacity: 1
         });
+*/
+        var WMSprod = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            version: '1.3.0',
+            continuousWorld : true,
+            tiled: true,
+            attribution: "Direccion Gral de GIS",
+            info_format: 'application/json',
+            opacity: 1
+        });
 
-        var lyr_perfilado = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_perfilado");
-        let lyr_perfilado2019 = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_perfilado_2019");
+        // tablero de control de obras
+        var vw_servicio_publico_aporte_suelo = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
+        var vw_servicio_publico_cuneteo = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_Cuneteo");
+        var vw_servicio_publico_desbarre_de_calle = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
+        var vw_servicio_publico_ensanchamiento = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+        var vw_servicio_publico_perfilado = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
 
-        var lyr_reconstruccion = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_reconstruccion");
-        var lyr_reconstruccion2019 = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_reconstruccion_2019");
+        // colocacion de tubos
+        var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
+        var vw_visor_colocacion_tubo_crucecalle = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
 
-        var lyr_cuneteo = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_cuneteo");
-        var lyr_cuneteo2019 = servicioWMS.getLayer("mantenimiento_calle_2019:vw_mantenimiento_calle_2019_cuneteo_2019");
 
-        var lyr_callePorTipoCalzada = WMS50.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
+        var lyr_callePorTipoCalzada = WMSprod.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
 
         var lyr_zona_mantenimiento = servicioWMS.getLayer("mantenimiento_calle_2019:vw_zona_mantenimiento_calle");
 
@@ -166,13 +227,14 @@ if($_SESSION['validado']!='SI'){
         };
 
         L.control.layers(baseMaps,{
-            '<b>Limpieza de Cuneta 2019</b><div style="padding-left: 13px;"><span><img src="legend/cuneteo2019.png" /></span> Solo Año 2019</div>': lyr_cuneteo2019,
-            '<b>Limpieza de cuneta (completo)</b><br /><div style="padding-left: 9px;"><table><tr><td style="text-align: center;"><img src="legend/Limpiezadecunetas_4_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/Limpiezadecunetas_4_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/Limpiezadecunetas_4_Masde3Intervenciones2.png" /></td><td> Mas de 3 Intervenciones</td></tr></table></div>': lyr_cuneteo,
-            '<b>Reconstruccion de calzada 2019</b><div style="padding-left: 13px;"><span><img src="legend/reconstruccion2019.png" /></span> Solo Año 2019</div>': lyr_reconstruccion2019,
-            '<b>Reconstruccion de calzada (completo)</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/Reconstrucciondecordones_3_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/Reconstrucciondecordones_3_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/Reconstrucciondecordones_3_Masde3Intervenciones2.png" /></td><td> Mas de 3 Intervenciones</td></tr></table></div>': lyr_reconstruccion,
-            '<b>Perfilado de calles 2019</b><div style="padding-left: 13px;"><span><img src="legend/perfilado2019.png" /></span> Solo Año 2019</div>': lyr_perfilado2019, 
-            
-            '<b>Perfilado de Calles (completo)</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_10.png" /></td><td> 1 Intervencion</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_2Y3Intervenciones1.png" /></td><td> 2 Y 3 Intervenciones</td></tr><tr><td style="text-align: center;"><img src="legend/PerfiladodeCalles_2_Masde3Intervenciones2.png" /></td><td>Mas de 3 Intervenciones</td></tr></table></div>': lyr_perfilado,
+            '<span class="sp">Aporte de suelo</span>': vw_servicio_publico_aporte_suelo,
+            '<span class="sp">Cuneteo</span>': vw_servicio_publico_cuneteo,
+            '<span class="sp">Desbarre de calle</span>': vw_servicio_publico_desbarre_de_calle,
+            '<span class="sp">Ensanchamiento de calzada</span>': vw_servicio_publico_ensanchamiento,
+            '<span class="sp">Perfilado de calle</span><hr/>': vw_servicio_publico_perfilado,
+
+            '<span class="tub">Colocacion tubo Acc. Dom.</span>': vw_visor_colocacion_tubo_acdom,
+            '<span class="tub">Colocacion tubo Cruce calle</span><hr>': vw_visor_colocacion_tubo_crucecalle,
 
             '<b>Calle por tipo de calzada</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/calle_por_tipo_calzada.png" /></td></tr></table></div>': lyr_callePorTipoCalzada, 
 
@@ -190,5 +252,10 @@ if($_SESSION['validado']!='SI'){
         }
         document.getElementById('btnSalir').addEventListener('click', function(){document.location='salir/';}, false);
         </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
     </body>
 </html>

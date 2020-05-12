@@ -8,18 +8,55 @@ var wms_GIS = L.WMS.Source.extend({
         if (!this._map){
             return;
         }
+
+        var objMapa = this._map;
   
         //info = '<div>Plan Hidrico - Restitucion de pluviales</div>' + info;
   
         var datos = JSON.parse(info);
+        var datoInfo = '';
 
         /* que layer */
         var queLayer = datos.features[0].id.split('.');
 
-        if (queLayer[0] === "vw_ide_calle_por_tipo_calzada") { return false; };
 
-        if (queLayer[0] === "vw_zona_mantenimiento_calle") { return false; };
-        
+        //if (queLayer[0] === "vw_servicio_publico_aporte_suelo") { 
+
+          $.ajax('lee_atributo.php', {
+            async: true,
+            data: {
+              id_sp: datos.features[0].properties.id_sp, 
+              actividad: datos.features[0].properties.actividad,
+              calle: datos.features[0].properties.nombre_calles,
+              altura: datos.features[0].properties.altur_par,
+              barrio: datos.features[0].properties.nombre_barrio,
+              srv: queLayer[0]
+            },
+            dataType: 'html',
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(jqXHR);
+              console.log('textStatus', textStatus);
+              console.log(errorThrown);
+              return true;
+            },
+            success: function(data, textStatus, jqXHR) {
+              objMapa.openPopup(data, latlng);
+              return true;
+            },
+            type: 'POST'
+          });
+
+          return true; 
+
+        //}
+
+        alert('Esta funcion estara disponible muuuuyy pronto');
+
+        return false;
+
+    
+
+
         /* si hace click en la capa de calles por tipo de calzada, no muestra el infowindow */
         if (datos.features[0].properties['FNA_BARIOS'] !== undefined) { return false; };
 

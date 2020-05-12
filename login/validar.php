@@ -10,6 +10,8 @@ if($username=='romina' && $password=='147') $permitido = 'SI';
 if($username=='mapagis' && $password=='a45r') $permitido = 'SI';
 if($username=='visor' && $password=='k537c') $permitido = 'SI';
 if($username=='ingreso' && $password=='t619w') $permitido = 'SI';
+if($username=='sandra' && $password=='147') $permitido = 'SI';
+
 
 if($permitido=='SI'){
 
