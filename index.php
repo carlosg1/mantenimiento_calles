@@ -79,6 +79,10 @@
                 font-family: 'Righteous', cursive;
                 font-size: 24pt;
             }
+            .apu {
+                color: #007E33;
+                font-weight: 600;
+            }
         </style>
         <title></title>
     </head>
@@ -172,19 +176,7 @@
             info_format: 'application/json',
             opacity: 1
         });
-/*
-        var WMS50 = new wms_GIS("http://172.25.50.50:8080/geoserver/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1
-        });
-*/
+
         var WMSprod = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
             format: 'image/png',
             uppercase: true,
@@ -194,8 +186,11 @@
             tiled: true,
             attribution: "Direccion Gral de GIS",
             info_format: 'application/json',
-            opacity: 1
+            opacity: 1,
+            cql_filter: "fecha_servicio > '2019-12-31'"
         });
+
+
 
         // tablero de control de obras
         var vw_servicio_publico_aporte_suelo = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
@@ -203,6 +198,24 @@
         var vw_servicio_publico_desbarre_de_calle = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
         var vw_servicio_publico_ensanchamiento = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
         var vw_servicio_publico_perfilado = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+
+        // alumbrado publico
+        //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
+        var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            version: '1.3.0',
+            continuousWorld : true,
+            tiled: true,
+            attribution: "Direccion Gral de GIS",
+            info_format: 'application/json',
+            opacity: 1,
+            cql_filter: "calle LIKE 'VIEDMA%'"
+        }).getLayer("infraestructura:vw_visor_alumbrado_publico");
+
+
+
 
         // colocacion de tubos
         var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
@@ -232,6 +245,12 @@
             '<span class="sp">Desbarre de calle</span>': vw_servicio_publico_desbarre_de_calle,
             '<span class="sp">Ensanchamiento de calzada</span>': vw_servicio_publico_ensanchamiento,
             '<span class="sp">Perfilado de calle</span><hr/>': vw_servicio_publico_perfilado,
+
+
+
+            '<span class="apu">Alumbrado publico</span><hr/>': vw_visor_alumbrado_publico,
+
+
 
             '<span class="tub">Colocacion tubo Acc. Dom.</span>': vw_visor_colocacion_tubo_acdom,
             '<span class="tub">Colocacion tubo Cruce calle</span><hr>': vw_visor_colocacion_tubo_crucecalle,

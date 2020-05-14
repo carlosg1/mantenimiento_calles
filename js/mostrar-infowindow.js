@@ -5,22 +5,21 @@
 var wms_GIS = L.WMS.Source.extend({
 
     'showFeatureInfo': function(latlng, info) {
+
         if (!this._map){
             return;
         }
 
         var objMapa = this._map;
   
-        //info = '<div>Plan Hidrico - Restitucion de pluviales</div>' + info;
-  
         var datos = JSON.parse(info);
-        var datoInfo = '';
+
+        var capasServicio = ['vw_servicio_publico_aporte_suelo', 'vw_servicio_publico_Cuneteo', 'vw_servicio_publico_desbarre_de_calle', 'vw_servicio_publico_ensanchamiento', 'vw_servicio_publico_perfilado'];
 
         /* que layer */
         var queLayer = datos.features[0].id.split('.');
 
-
-        //if (queLayer[0] === "vw_servicio_publico_aporte_suelo") { 
+        if(capasServicio.includes(queLayer[0])){
 
           $.ajax('lee_atributo.php', {
             async: true,
@@ -47,8 +46,33 @@ var wms_GIS = L.WMS.Source.extend({
           });
 
           return true; 
+        }
 
-        //}
+
+        if(queLayer[0] === 'vw_visor_alumbrado_publico'){
+
+          var info = '<div class="card text-dark" style="width:20rem;">';
+          info += '<div class="card-header"><h5>Alumbrado publico</h5></div>';
+          info += '<div class="card-body">';
+          //info += '<h5 class="card-title">Alumbrado publico</h5>';
+          info += '<p class="card-text">';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Nomenclador: </div><div style="float:left;">' + datos.features[0].properties.cod_nomenc + '</div></div><br/>';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Lampara: </div><div style="float:left;">' + datos.features[0].properties.lampara + '</div></div><br/>';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Potencia: </div><div style="float:left;">' + datos.features[0].properties.potencia + '</div></div><br/>';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Condicion: </div><div style="float:left;">' + datos.features[0].properties.condicion + '</div></div><br/>';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Calle: </div><div style="float:left;">' + datos.features[0].properties.calle + '</div></div><br/>';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Altura: </div><div style="float:left;">' + datos.features[0].properties.altura + '</div></div><br/>';
+          info += '<div style="display:block;"><div style="float:left;font-weight:600;width:7rem;">Barrio: </div><div style="float:left;">' + datos.features[0].properties.barrio + '</div></div>';
+          info += '';
+          info += '</p>';
+          info+= '</div>';
+          info += '</div>';
+
+          this._map.openPopup(info, latlng);
+
+          return true; 
+
+        }
 
         alert('Esta funcion estara disponible muuuuyy pronto');
 
