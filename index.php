@@ -31,12 +31,18 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <!--Plugin CSS file with desired skin-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+        
         <!-- 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
          -->
 
          <!-- Google Fonts -->
          <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+
+
 
         <style>
             html, body, #map {
@@ -72,7 +78,7 @@
                 width: 480px;
                 visibility:hidden;
                 border: solid 2px #000;
-                z-index: 2000;
+                z-index: 1500;
                 background-color: #fff;
             }
             .infor .card .card-body h5 {
@@ -82,6 +88,20 @@
             .apu {
                 color: #007E33;
                 font-weight: 600;
+            }
+            .fecha-slider {
+                bottom: 2.1rem;
+                right: 6.625rem;
+                width: 28.125rem;
+                position: absolute;
+                z-index: 2000;
+            }
+            .boton-slider {
+                bottom: 2.9rem;
+                right: 0.625rem;
+                width: 5.125rem;
+                position: absolute;
+                z-index: 2001;
             }
         </style>
         <title></title>
@@ -105,6 +125,16 @@
         <!-- Cuadro para el infowindow -->
 
         <div id="map"></div>
+
+        <!-- slider de seleccion de fecha -->
+        <div class="fecha-slider">
+            
+            <input type="text" class="js-range-slider" name="my_range" style="float:left;" value="" />
+        </div>
+
+        <div class="boton-slider">
+        <button class="btn btn-primary" id="confirmar" style="float;left;">Aplicar</button>
+        </div>
 
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
@@ -187,7 +217,7 @@
             attribution: "Direccion Gral de GIS",
             info_format: 'application/json',
             opacity: 1,
-            cql_filter: "fecha_servicio > '2019-12-31'"
+            cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
         });
 
 
@@ -197,7 +227,37 @@
         var vw_servicio_publico_cuneteo = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_Cuneteo");
         var vw_servicio_publico_desbarre_de_calle = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
         var vw_servicio_publico_ensanchamiento = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
-        var vw_servicio_publico_perfilado = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+        
+        var vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            version: '1.3.0',
+            continuousWorld : true,
+            tiled: true,
+            attribution: "Direccion Gral de GIS",
+            info_format: 'application/json',
+            opacity: 1,
+            cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
+        }).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+
+
+
+        //var vw_servicio_publico_perfilado = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+
+        // perfilado de calles
+        var vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            version: '1.3.0',
+            continuousWorld : true,
+            tiled: true,
+            attribution: "Direccion Gral de GIS",
+            info_format: 'application/json',
+            opacity: 1,
+            cql_filter: "fecha_servicio = '2020-05-05'"
+        }).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
 
         // alumbrado publico
         //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
@@ -211,7 +271,7 @@
             attribution: "Direccion Gral de GIS",
             info_format: 'application/json',
             opacity: 1,
-            cql_filter: "calle LIKE 'VIEDMA%'"
+            // cql_filter: "calle LIKE 'VIEDMA%'"
         }).getLayer("infraestructura:vw_visor_alumbrado_publico");
 
 
@@ -275,6 +335,13 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+        <!--Plugin JavaScript file-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+        <script src="adds/selector-fecha.js"></script>
+        <script>
+            map.on('baselayerchange', function(e) { console.log('baselayerchange ', e); });
+            map.on('overlayadd', function(d){ console.log('overlayadd ', d); });
+            map.on('overlayremove', function(d){ console.log('overlayremove ', d); });
+        </script>
     </body>
 </html>
