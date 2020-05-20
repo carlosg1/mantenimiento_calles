@@ -264,7 +264,19 @@
         <script>
 
             var obra={
-                serverWms: 'http://192.168.10.51:8282/geoserver/wms?version=1.3.0&'
+                serverWms: 'http://gis.ciudaddecorrientes.gov.ar:8282/geoserver/wms?version=1.3.0&',
+                opcionMapa: {
+                    format: 'image/png',
+                    uppercase: true,
+                    transparent: true,
+                    version: '1.3.0',
+                    continuousWorld : true,
+                    tiled: true,
+                    attribution: "Direccion Gral de GIS",
+                    info_format: 'application/json',
+                    opacity: 1,
+                    cql_filter: "1=1"
+                }
             }
 
         var map = L.map('map', {
@@ -321,7 +333,7 @@
             opacity: 1,
             cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
         });
-
+/*
         var opcionMapa = {
             format: 'image/png',
             uppercase: true,
@@ -334,34 +346,34 @@
             opacity: 1,
             cql_filter: "1=1"
         }
-
+*/
 
 
         // perfilado de calles
-        var vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+        var vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
 
         // ensanchamiento
-        var vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+        var vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
 
         // aporte de suelo
-        var vw_servicio_publico_aporte_suelo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
+        var vw_servicio_publico_aporte_suelo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
 
         // cuneteo 
-        var vw_servicio_publico_cuneteo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_cuneteo1");
+        var vw_servicio_publico_cuneteo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_cuneteo1");
         
         // desbarre de calle
-        var vw_servicio_publico_desbarre_de_calle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
+        var vw_servicio_publico_desbarre_de_calle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
 
         // alumbrado publico
         //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
-        var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
+        var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
         
 
         // colocacion de tubos
-        var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
+        var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
         
         // cruce de calle
-        var vw_visor_colocacion_tubo_crucecalle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
+        var vw_visor_colocacion_tubo_crucecalle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
         
 
         // bacheo
