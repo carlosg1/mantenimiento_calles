@@ -220,7 +220,7 @@
                                         </span>
                                     </div>
                                 </label>
-                                <label> <!-- Colocacion tubo -->
+                                <label> <!-- Cruce de calle -->
                                     <div>
                                         <input type="checkbox" class="leaflet-control-layers-selector" name="chkTuboCruceCalle" id="chkTuboCruceCalle">
                                         <span>
@@ -262,6 +262,10 @@
         <script src="js/leaflet-measure.js"></script>
         <script src="js/mostrar-infowindow.js"></script>
         <script>
+
+            var obra={
+                serverWms: 'http://192.168.10.51:8282/geoserver/wms?version=1.3.0&'
+            }
 
         var map = L.map('map', {
             drawControl: true,
@@ -351,11 +355,16 @@
         // alumbrado publico
         //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
         var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
+        
 
         // colocacion de tubos
-        var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
-        var vw_visor_colocacion_tubo_crucecalle = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
+        var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
+        
+        // cruce de calle
+        var vw_visor_colocacion_tubo_crucecalle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
+        
 
+        // bacheo
 
         var lyr_callePorTipoCalzada = WMSprod.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
 
@@ -365,7 +374,7 @@
         };
 
         /*** la capa de control despues se va a borrar */
-
+/*
         L.control.layers(baseMaps,{
             '<span class="sp">Aporte de suelo</span>': vw_servicio_publico_aporte_suelo,
             '<span class="sp">Cuneteo</span>': vw_servicio_publico_cuneteo,
@@ -387,7 +396,7 @@
             collapsed:false,
             position:'bottomleft'
         }).addTo(map);
-
+*/
         setBounds();
 
         L.control.scale().addTo(map);

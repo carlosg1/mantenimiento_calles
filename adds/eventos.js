@@ -59,12 +59,22 @@ $(document).ready(function(){
     });
 
     // colocacion de tubos
-    $("#chkAlumbrado").click(function(ev){
+    $("#chkTuboAccesoDomicilio").click(function(ev){
         if(this.checked){
             ev.stopPropagation();
-            vw_visor_alumbrado_publico.addTo(map);
+            vw_visor_colocacion_tubo_acdom.addTo(map);
         }else{
-            map.removeLayer(vw_visor_alumbrado_publico);
+            map.removeLayer(vw_visor_colocacion_tubo_acdom);
+        }
+    });
+
+    // cruce de calles
+    $("#chkTuboCruceCalle").click(function(ev){
+        if(this.checked){
+            ev.stopPropagation();
+            vw_visor_colocacion_tubo_crucecalle.addTo(map);
+        }else{
+            map.removeLayer(vw_visor_colocacion_tubo_crucecalle);
         }
     });
 });
