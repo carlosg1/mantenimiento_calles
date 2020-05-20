@@ -310,16 +310,7 @@
             opacity: 1.0
         });
 
-        var overlay_CapabaseGIS_0 = L.WMS.layer(obra.serverWms, "capa_base_mcc:capa_base", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            continuousWorld : true,
-            tiled: true,
-            info_format: 'text/html',
-            opacity: 1,
-            identify: false,
-        });
+        var overlay_CapabaseGIS_0 = L.WMS.layer(obra.serverWms, "capa_base_mcc:capa_base", obra.opcionMapa);
 
         var WMSprod = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
             format: 'image/png',
