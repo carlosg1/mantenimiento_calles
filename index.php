@@ -264,7 +264,7 @@
         <script>
 
             var obra={
-                serverWms: 'http://gis.ciudaddecorrientes.gov.ar:8282/geoserver/wms?version=1.3.0',
+                serverWms: 'http://gis.ciudaddecorrientes.gov.ar:8282/geoserver/wms/service=wms&',
                 opcionMapa: {
                     format: 'image/png',
                     uppercase: true,
