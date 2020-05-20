@@ -249,7 +249,6 @@
             <button class="btn btn-primary" id="confirmar" style="float;left;">Aplicar</button>
         </div>
 
-        <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet-src.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
@@ -359,13 +358,6 @@
 
 
         var lyr_callePorTipoCalzada = WMSprod.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
-
-
-        var osmGeocoder = new L.Control.OSMGeocoder({
-            collapsed: false,
-            position: 'topleft',
-            text: 'Search',
-        });
 
         var baseMaps = {
             "Google Satelite": overlay_GooglecnSatellite_0,
