@@ -1,4 +1,4 @@
-$(window).on('load', function () {
+$(document).ready(function () {
     var lang = "es-AR";
     anio = new Date();
     var year = anio.getFullYear();
@@ -14,7 +14,7 @@ $(window).on('load', function () {
     });
 
     //Inicializo la variable cadena final con un valor por defecto
-    var cadena_final = `fecha_servicio BETWEEN '${ini_desde}' AND '${ini_hasta}'`;
+    cadena_final = `fecha_servicio BETWEEN '${ini_desde}' AND '${ini_hasta}'`;
 
     function dateToTS(date) {
         return date.valueOf();
@@ -77,20 +77,37 @@ $(window).on('load', function () {
     }
 
     function cadena() {
-        vw_servicio_publico_perfilado.remove();
+        map.eachLayer(function(l){
 
-        vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1,
-            cql_filter: cadena_final
-        }).getLayer("servicio_publico_20:vw_servicio_publico_perfilado").addTo(map);
+            switch(l._name){
+                case 'servicio_publico_20:vw_servicio_publico_perfilado':
+                    map.removeLayer(vw_servicio_publico_perfilado);
+
+                    opcionMapa.cql_filter=cadena_final;
+
+                    vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado").addTo(map);
+                break;
+
+                case 'servicio_publico_20:vw_servicio_publico_ensanchamiento':
+                    map.removeLayer(vw_servicio_publico_perfilado);
+
+                    opcionMapa.cql_filter=cadena_final;
+                    
+                    vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+                break;
+
+                case 'servicio_publico_20:vw_servicio_publico_aporte_suelo':
+                    map.removeLayer(vw_servicio_publico_aporte_suelo);
+
+                    opcionMapa.cql_filter=cadena_final;
+                    
+                    vw_servicio_publico_aporte_suelo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
+                break;
+
+                
+            }
+        });
+
     }
 
     function calcularMes(m) {

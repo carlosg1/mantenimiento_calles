@@ -42,7 +42,10 @@
          <!-- Google Fonts -->
          <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
 
-
+        <script>
+            //Inicializo la variable cadena final con un valor por defecto
+            var cadena_final = undefined;
+        </script>
 
         <style>
             html, body, #map {
@@ -68,7 +71,7 @@
                 text-family: 'Roboto';
                 }
             .tub {
-                color: #668A42;
+                color: #FF602E;
             }
             .infor {
                 position:absolute;
@@ -104,10 +107,12 @@
                 z-index: 2001;
             }
         </style>
-        <title></title>
+        <title>Obras | Desarrollo Urbano</title>
     </head>
     <body>
         <button type="button" class="btn btn-info salir" id="btnSalir">Salir</button>
+
+        
 
         <!-- Cuadro para el infowindow -->
         <div class="infor">
@@ -124,16 +129,124 @@
         </div>
         <!-- Cuadro para el infowindow -->
 
-        <div id="map"></div>
+
+        <!-- // contenedor mapa -->
+        <div id="map">
+            
+
+            <!-- mi control de capas -->
+            <div class="leaflet-control-container">
+                <div class="leaflet-top leaflet-right">
+                   
+                    <div class="leaflet-control-layers leaflet-control-layers-expanded leaflet-control" aria-haspopup="true" style="margin-top:3.875rem">
+                        <form class="leaflet-control-layers-list">
+                            <div class="leaflet-control-layers-base">
+                                <label>
+                                    <div>
+                                        <input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers" checked="checked">
+                                        <span>Caba pase GIS MCC</span>
+                                    </div>
+                                </label>
+                                <label>
+                                    <div>
+                                        <input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers">
+                                        <span>Google Satelital</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="leaflet-control-layers-separator"></div>  
+
+                            <div class="leaflet-control-layers-overlays">
+                                <label> <!-- Capa perfilado de calle -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkPerfilado" id="chkPerfilado">
+                                        <span>
+                                            <span class="sp">Perfilado de calles</span>
+                                        </span>
+                                    </div>
+                                </label>
+                                <label> <!-- Capa Ensanchamiento de calzada -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkEnsanchamiento" id="chkEnsanchamiento">
+                                        <span>
+                                            <span class="sp">Ensanchamiento de calzada</span>
+                                        </span>
+                                    </div>
+                                </label>
+                                <label> <!-- Capa aporte de suelo -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkAporteSuelo" id="chkAporteSuelo">
+                                        <span>
+                                            <span class="sp">Aporte de suelo</span>
+                                        </span>
+                                    </div>
+                                </label>
+                                <label> <!-- Capa cuneteo -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkCuneteo" id="chkCuneteo">
+                                        <span>
+                                            <span class="sp">Cuneteo</span>
+                                        </span>
+                                    </div>
+                                </label>
+                                <label> <!-- Desbarre -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkDesbarre" id="chkDesbarre">
+                                        <span>
+                                            <span class="sp">Desbarre</span>
+                                        </span>
+                                    </div>
+                                </label>
+
+                                <div class="leaflet-control-layers-separator"></div>
+
+                                <label> <!-- Alumbrado publico -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkAlumbrado" id="chkAlumbrado">
+                                        <span>
+                                            <span class="apu">Alumbrado p&uacute;blico</span>
+                                        </span>
+                                    </div>
+                                </label>
+
+                                <div class="leaflet-control-layers-separator"></div>
+
+                                <label> <!-- Colocacion tubo -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkTuboAccesoDomicilio" id="chkTuboAccesoDomicilio">
+                                        <span>
+                                            <span class="tub">Tubo Acceso a domicilio</span>
+                                        </span>
+                                    </div>
+                                </label>
+                                <label> <!-- Colocacion tubo -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkTuboCruceCalle" id="chkTuboCruceCalle">
+                                        <span>
+                                            <span class="tub">Tubo Cruce de calle</span>
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- // mi control de capas -->
+
+
+        </div>
+        <!-- // contenedor mapa -->
+        
 
         <!-- slider de seleccion de fecha -->
         <div class="fecha-slider">
-            
             <input type="text" class="js-range-slider" name="my_range" style="float:left;" value="" />
         </div>
 
         <div class="boton-slider">
-        <button class="btn btn-primary" id="confirmar" style="float;left;">Aplicar</button>
+            <button class="btn btn-primary" id="confirmar" style="float;left;">Aplicar</button>
         </div>
 
         <script src="js/qgis2web_expressions.js"></script>
@@ -155,15 +268,15 @@
             drawControl: true,
             //center: [-27.49,-58.82],
             zoomControl: true, 
-            maxZoom: 25, 
+            maxZoom: 18, 
             minZoom: 1
         }).fitBounds([[-27.5535444089,-58.9200306504],[-27.4048480239,-58.6404398294]]);
-        
+
         var hash = new L.Hash(map);
-        
+
         map.attributionControl.addAttribution(false);
         map.attributionControl.getContainer().innerHTML='<?php echo 'Usuario: ' . $_SESSION['usuario'] . ' - '; ?>'+'<a href="http://gis.ciudaddecorrientes.gov.ar" target="_blank">Direccion Gral de SIG</a>';
-        
+
         var measureControl = new L.Control.Measure({
             primaryLengthUnit: 'meters',
             secondaryLengthUnit: 'kilometers',
@@ -193,20 +306,6 @@
             identify: false,
         });
 
-        map.addLayer(overlay_CapabaseGIS_0);
-
-        var servicioWMS = new wms_GIS("http://172.25.8.80:8080/geoserver/mantenimiento_calle_2019/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1
-        });
-
         var WMSprod = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
             format: 'image/png',
             uppercase: true,
@@ -220,15 +319,7 @@
             cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
         });
 
-
-
-        // tablero de control de obras
-        var vw_servicio_publico_aporte_suelo = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
-        var vw_servicio_publico_cuneteo = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_Cuneteo");
-        var vw_servicio_publico_desbarre_de_calle = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
-        var vw_servicio_publico_ensanchamiento = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
-        
-        var vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
+        var opcionMapa = {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -238,44 +329,29 @@
             attribution: "Direccion Gral de GIS",
             info_format: 'application/json',
             opacity: 1,
-            cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
-        }).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+            cql_filter: "1=1"
+        }
 
 
-
-        //var vw_servicio_publico_perfilado = WMSprod.getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
 
         // perfilado de calles
-        var vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1,
-            cql_filter: "fecha_servicio = '2020-05-05'"
-        }).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+        var vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+
+        // ensanchamiento
+        var vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+
+        // aporte de suelo
+        var vw_servicio_publico_aporte_suelo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
+
+        // cuneteo 
+        var vw_servicio_publico_cuneteo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_cuneteo1");
+        
+        // desbarre de calle
+        var vw_servicio_publico_desbarre_de_calle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
 
         // alumbrado publico
         //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
-        var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1,
-            // cql_filter: "calle LIKE 'VIEDMA%'"
-        }).getLayer("infraestructura:vw_visor_alumbrado_publico");
-
-
-
+        var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
 
         // colocacion de tubos
         var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
@@ -284,7 +360,6 @@
 
         var lyr_callePorTipoCalzada = WMSprod.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
 
-        var lyr_zona_mantenimiento = servicioWMS.getLayer("mantenimiento_calle_2019:vw_zona_mantenimiento_calle");
 
         var osmGeocoder = new L.Control.OSMGeocoder({
             collapsed: false,
@@ -292,13 +367,13 @@
             text: 'Search',
         });
 
-        //osmGeocoder.addTo(map);
-
         var baseMaps = {
             "Google Satelite": overlay_GooglecnSatellite_0,
             "Capa base GIS": overlay_CapabaseGIS_0,
         };
 
+        /*** la capa de control despues se va a borrar */
+/*
         L.control.layers(baseMaps,{
             '<span class="sp">Aporte de suelo</span>': vw_servicio_publico_aporte_suelo,
             '<span class="sp">Cuneteo</span>': vw_servicio_publico_cuneteo,
@@ -319,9 +394,10 @@
 
             '<b>Zonas de mantenimiento</b><div style="padding-left: 13px;"><span><img src="legend/zona_mantenimiento.png" /></span> Zonas de mantenimiento 2019</div>"': lyr_zona_mantenimiento,
         },{
-            collapsed:false
+            collapsed:false,
+            position:'bottomleft'
         }).addTo(map);
-
+*/
         setBounds();
 
         L.control.scale().addTo(map);
@@ -338,10 +414,6 @@
         <!--Plugin JavaScript file-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
         <script src="adds/selector-fecha.js"></script>
-        <script>
-            map.on('baselayerchange', function(e) { console.log('baselayerchange ', e); });
-            map.on('overlayadd', function(d){ console.log('overlayadd ', d); });
-            map.on('overlayremove', function(d){ console.log('overlayremove ', d); });
-        </script>
+        <script src="adds/eventos.js"></script>
     </body>
 </html>

@@ -16,6 +16,9 @@ var wms_GIS = L.WMS.Source.extend({
 
         var capasServicio = ['vw_servicio_publico_aporte_suelo', 'vw_servicio_publico_Cuneteo', 'vw_servicio_publico_desbarre_de_calle', 'vw_servicio_publico_ensanchamiento', 'vw_servicio_publico_perfilado'];
 
+        // no trae ningun dato
+        if(datos.features.length===0) return true;
+
         /* que layer */
         var queLayer = datos.features[0].id.split('.');
 
