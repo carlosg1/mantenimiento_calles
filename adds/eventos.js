@@ -56,9 +56,16 @@ $(document).ready(function(){
         }else{
             map.removeLayer(vw_visor_alumbrado_publico);
         }
-        return true;
     });
-        return true;
+
     // colocacion de tubos
+    $("#chkAlumbrado").click(function(ev){
+        if(this.checked){
+            ev.stopPropagation();
+            vw_visor_alumbrado_publico.addTo(map);
+        }else{
+            map.removeLayer(vw_visor_alumbrado_publico);
+        }
+    });
 });
 
