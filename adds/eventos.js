@@ -10,7 +10,15 @@ $(document).ready(function(){
     $("#chkDesbarre").click(function(ev){if(this.checked){vw_servicio_publico_desbarre_de_calle.addTo(map);}else{map.removeLayer(vw_servicio_publico_desbarre_de_calle);}});
 
     // capa alumbrado publico
-    $("#chkAlumbrado").click(function(ev){if(this.checked){vw_visor_alumbrado_publico.addTo(map);}else{map.removeLayer(vw_visor_alumbrado_publico);}});
-
+    $("#chkAlumbrado").click(function(ev){
+        ev.preventDefault();
+        if(this.checked){
+            vw_visor_alumbrado_publico.addTo(map);
+        }else{
+            map.removeLayer(vw_visor_alumbrado_publico);
+        }
+        return true;
+    });
+        return true;
     // colocacion de tubos
 })

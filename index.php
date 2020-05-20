@@ -250,7 +250,7 @@
         </div>
 
         <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-src.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
         <script src="js/leaflet-hash.js"></script>
@@ -373,7 +373,7 @@
         };
 
         /*** la capa de control despues se va a borrar */
-/*
+
         L.control.layers(baseMaps,{
             '<span class="sp">Aporte de suelo</span>': vw_servicio_publico_aporte_suelo,
             '<span class="sp">Cuneteo</span>': vw_servicio_publico_cuneteo,
@@ -390,14 +390,12 @@
             '<span class="tub">Colocacion tubo Acc. Dom.</span>': vw_visor_colocacion_tubo_acdom,
             '<span class="tub">Colocacion tubo Cruce calle</span><hr>': vw_visor_colocacion_tubo_crucecalle,
 
-            '<b>Calle por tipo de calzada</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/calle_por_tipo_calzada.png" /></td></tr></table></div>': lyr_callePorTipoCalzada, 
-
-            '<b>Zonas de mantenimiento</b><div style="padding-left: 13px;"><span><img src="legend/zona_mantenimiento.png" /></span> Zonas de mantenimiento 2019</div>"': lyr_zona_mantenimiento,
+            '<b>Calle por tipo de calzada</b><br /><div style="padding-left: 13px;"><table><tr><td style="text-align: center;"><img src="legend/calle_por_tipo_calzada.png" /></td></tr></table></div>': lyr_callePorTipoCalzada
         },{
             collapsed:false,
             position:'bottomleft'
         }).addTo(map);
-*/
+
         setBounds();
 
         L.control.scale().addTo(map);
