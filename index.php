@@ -281,7 +281,7 @@
 
         var map = L.map('map', {
             drawControl: true,
-            //center: [-27.49,-58.82],
+            center: [-27.49,-58.82],
             zoomControl: true, 
             maxZoom: 18, 
             minZoom: 1
@@ -367,11 +367,11 @@
         // alumbrado publico
         //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
         var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
-        
+
 
         // colocacion de tubos
         var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
-        
+
         // cruce de calle
         var vw_visor_colocacion_tubo_crucecalle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", obra.opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
         
