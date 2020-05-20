@@ -264,12 +264,12 @@
         <script>
 
             var obra={
-                serverWms: 'http://gis.ciudaddecorrientes.gov.ar:8282/geoserver/wms?version=1.3.0&',
+                serverWms: 'http://gis.ciudaddecorrientes.gov.ar:8282/geoserver/wms?version=1.3.0',
                 opcionMapa: {
                     format: 'image/png',
                     uppercase: true,
                     transparent: true,
-                    version: '1.3.0',
+                    version: '1.1.1',
                     continuousWorld : true,
                     tiled: true,
                     attribution: "Direccion Gral de GIS",
