@@ -297,7 +297,7 @@
         var overlay_GooglecnSatellite_0 = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
             opacity: 1.0
         });
-        
+
         var overlay_CapabaseGIS_0 = L.WMS.layer("http://192.168.10.51:8282/geoserver/wms?version=1.3.0&", "capa_base_mcc:capa_base", {
             format: 'image/png',
             uppercase: true,
