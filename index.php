@@ -318,7 +318,7 @@
             opacity: 1
         });
 */
-        var WMSprod = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", {
+        var WMSprod = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -331,6 +331,7 @@
             cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
         });
 
+        var serverWms = "http://190.7.30.142:8282/geoserver/wms?";
 
         var opcionMapa = {
             format: 'image/png',
@@ -363,11 +364,13 @@
         var vw_servicio_publico_desbarre_de_calle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
 
         // alumbrado publico
-        //var vw_visor_alumbrado_publico = WMSprod.getLayer("infraestructura:vw_visor_alumbrado_publico");
-        var vw_visor_alumbrado_publico = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
+        var vw_visor_alumbrado_publico = new wms_GIS(serverWms, opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
 
         // colocacion de tubos
-        var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
+        // var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
+        var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
+
+
         var vw_visor_colocacion_tubo_crucecalle = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
 
 
