@@ -19,7 +19,7 @@ $(document).ready(function(){
     $("#chkEnsanchamiento").click(function(ev){if(this.checked){vw_servicio_publico_ensanchamiento.addTo(map);}else{map.removeLayer(vw_servicio_publico_ensanchamiento);}});
     $("#chkAporteSuelo").click(function(ev){if(this.checked){vw_servicio_publico_aporte_suelo.addTo(map);}else{map.removeLayer(vw_servicio_publico_aporte_suelo);}});
     $("#chkCuneteo").click(function(ev){if(this.checked){vw_servicio_publico_cuneteo.addTo(map);}else{map.removeLayer(vw_servicio_publico_cuneteo);}});
-    
+
     $("#chkDesbarre").click(function(ev){
         if(this.checked){
             vw_servicio_publico_desbarre_de_calle.addTo(map);

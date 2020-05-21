@@ -316,7 +316,7 @@
             identify: false,
         });
 
-        var serverWms = "http://190.7.30.142:8282/geoserver/wms?";
+        var serverWms = "http://gis.ciudaddecorrientes.gov.ar:8282/geoserver/wms?";
 
         var opcionMapa = {
             format: 'image/png',
