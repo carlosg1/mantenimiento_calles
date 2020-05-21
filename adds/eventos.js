@@ -33,4 +33,13 @@ $(document).ready(function(){
         }
     });
 
+    // cruce de calle
+    $("#chkTuboCruceCalle").click(function(ev){
+        if(this.checked){
+            vw_visor_colocacion_tubo_crucecalle.addTo(map);
+        }else{
+            map.removeLayer(vw_visor_colocacion_tubo_crucecalle);
+        }
+    });
+
 });

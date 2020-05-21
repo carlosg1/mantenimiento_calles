@@ -367,16 +367,12 @@
         var vw_visor_alumbrado_publico = new wms_GIS(serverWms, opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
 
         // colocacion de tubos
-        // var vw_visor_colocacion_tubo_acdom = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
         var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
 
 
-        var vw_visor_colocacion_tubo_crucecalle = WMSprod.getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
+        // cruce de calle
+        var vw_visor_colocacion_tubo_crucecalle = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
 
-
-        var lyr_callePorTipoCalzada = WMSprod.getLayer("w_red_vial:vw_ide_calle_por_tipo_calzada");
-
-        //var lyr_zona_mantenimiento = servicioWMS.getLayer("mantenimiento_calle_2019:vw_zona_mantenimiento_calle");
 
         var osmGeocoder = new L.Control.OSMGeocoder({
             collapsed: false,
