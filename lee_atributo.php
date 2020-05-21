@@ -27,6 +27,10 @@
     from actualizar.vw_servicios_publicos_full1 t2
     where ( (t2.id_tramo_calle = " . $reg_id_tramo_calle->id_tramo_calle . ") and (fecha_servicio > '2019-12-31') and (actividad = '" . $datos['actividad'] . "') )
     order by t2.fecha_servicio DESC";
+    $qry_servicio = "select t2.*
+    from actualizar.vw_servicios_publicos_full1 t2
+    where ( (t2.id_tramo_calle = " . $reg_id_tramo_calle->id_tramo_calle . ") and (actividad = '" . $datos['actividad'] . "') )
+    order by t2.fecha_servicio DESC";
 
     $rst_servicio = $conPdoPg->query($qry_servicio);
 

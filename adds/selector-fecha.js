@@ -85,15 +85,15 @@ $(document).ready(function () {
 
                     opcionMapa.cql_filter=cadena_final;
 
-                    vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado").addTo(map);
+                    vw_servicio_publico_perfilado = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado").addTo(map);
                 break;
 
                 case 'servicio_publico_20:vw_servicio_publico_ensanchamiento':
-                    map.removeLayer(vw_servicio_publico_perfilado);
+                    map.removeLayer(vw_servicio_publico_ensanchamiento);
 
                     opcionMapa.cql_filter=cadena_final;
                     
-                    vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+                    vw_servicio_publico_ensanchamiento = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
                 break;
 
                 case 'servicio_publico_20:vw_servicio_publico_aporte_suelo':
@@ -101,7 +101,7 @@ $(document).ready(function () {
 
                     opcionMapa.cql_filter=cadena_final;
                     
-                    vw_servicio_publico_aporte_suelo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
+                    vw_servicio_publico_aporte_suelo = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
                 break;
 
                 
