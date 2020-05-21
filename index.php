@@ -293,19 +293,19 @@
             primaryAreaUnit: 'sqmeters',
             secondaryAreaUnit: 'hectares'
         });
-        
+
         measureControl.addTo(map);
-        
+
         var bounds_group = new L.featureGroup([]);
-        
+
         function setBounds() {
         }
 
-        var overlay_GooglecnSatellite_0 = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+        var googleSatelital = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
             opacity: 1.0
         });
-        
-        var overlay_CapabaseGIS_0 = L.WMS.layer("http://190.7.30.142:8282/geoserver/wms?version=1.3.0&", "capa_base_mcc:capa_base", {
+
+        var capaBaseGisMcc = L.WMS.layer("http://190.7.30.142:8282/geoserver/wms?version=1.3.0&", "capa_base_mcc:capa_base", {
             format: 'image/png',
             uppercase: true,
             transparent: true,
@@ -315,20 +315,7 @@
             opacity: 1,
             identify: false,
         });
-/*
-        var WMSprod = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1,
-            cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
-        });
-*/
+
         var serverWms = "http://190.7.30.142:8282/geoserver/wms?";
 
         var opcionMapa = {
@@ -343,8 +330,6 @@
             opacity: 1,
             cql_filter: "1=1"
         }
-
-
 
         // perfilado de calles
         var vw_servicio_publico_perfilado = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
@@ -373,7 +358,6 @@
         // bacheo
         vw_seguimiento_bacheo_2020 = new wms_GIS(serverWms, opcionMapa).getLayer("obras_municipales:vw_obras_de_bacheo");
 
-
         var osmGeocoder = new L.Control.OSMGeocoder({
             collapsed: false,
             position: 'topleft',
@@ -383,8 +367,8 @@
         //osmGeocoder.addTo(map);
 
         var baseMaps = {
-            "Google Satelite": overlay_GooglecnSatellite_0,
-            "Capa base GIS": overlay_CapabaseGIS_0,
+            "Google Satelite": googleSatelital,
+            "Capa base GIS": capaBaseGisMcc,
         };
 
 /*

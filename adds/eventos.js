@@ -1,6 +1,19 @@
 $(document).ready(function(){
     
-    overlay_CapabaseGIS_0.addTo(map);
+    capaBaseGisMcc.addTo(map);
+
+    // capas base
+    $("#cbGisMcc").click(function(e){
+        console.log('click en cbGisMcc');
+        map.addLayer(capaBaseGisMcc);
+        map.removeLayer(googleSatelital);
+    })
+
+    $("#cbGoogleSatelital").click(function(e){
+        console.log('click en cbGoogleSatelital');
+        map.addLayer(googleSatelital);
+        map.removeLayer(capaBaseGisMcc)
+    })
 
     $("#chkPerfilado").click(function(ev){if(this.checked){vw_servicio_publico_perfilado.addTo(map);}else{map.removeLayer(vw_servicio_publico_perfilado);}});
     $("#chkEnsanchamiento").click(function(ev){if(this.checked){vw_servicio_publico_ensanchamiento.addTo(map);}else{map.removeLayer(vw_servicio_publico_ensanchamiento);}});
@@ -53,9 +66,7 @@ $(document).ready(function(){
 
     // mi-control-layer-container
     $("#mi-control-layer-container").click(function(ev){
-        console.log(ev);
         ev.stopPropagation();
     });
-
 
 });
