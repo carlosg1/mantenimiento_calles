@@ -14,7 +14,7 @@ var wms_GIS = L.WMS.Source.extend({
   
         var datos = JSON.parse(info);
 
-        var capasServicio = ['vw_servicio_publico_aporte_suelo', 'vw_servicio_publico_Cuneteo', 'vw_servicio_publico_desbarre_de_calle', 'vw_servicio_publico_ensanchamiento', 'vw_servicio_publico_perfilado'];
+        var capasServicio = ['vw_servicio_publico_aporte_suelo', 'vw_servicio_publico_cuneteo1', 'vw_servicio_publico_desbarre_de_calle', 'vw_servicio_publico_ensanchamiento', 'vw_servicio_publico_perfilado'];
 
         // no trae ningun dato
         if(datos.features.length===0) return true;
@@ -50,7 +50,6 @@ var wms_GIS = L.WMS.Source.extend({
 
           return true; 
         }
-
 
         if(queLayer[0] === 'vw_visor_alumbrado_publico'){
 

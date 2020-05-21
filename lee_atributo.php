@@ -4,7 +4,7 @@
 
   require_once('conPDO1921681051.php');
 
-  $capasServicio = array('vw_servicio_publico_aporte_suelo', 'vw_servicio_publico_Cuneteo', 'vw_servicio_publico_desbarre_de_calle', 'vw_servicio_publico_ensanchamiento', 'vw_servicio_publico_perfilado');
+  $capasServicio = array('vw_servicio_publico_aporte_suelo', 'vw_servicio_publico_cuneteo1', 'vw_servicio_publico_desbarre_de_calle', 'vw_servicio_publico_ensanchamiento', 'vw_servicio_publico_perfilado');
   $datos = $_POST;
   $id_sp = $datos['id_sp'];
   $srv = $datos['srv'];
