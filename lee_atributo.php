@@ -32,7 +32,7 @@
 
     if($rst_servicio->rowCount() == 0){
                   
-      echo '<div class="alert alert-primary" style="width:450px;"><p class="h3 text-center">Sin actividad en 2020</p></div>';
+      echo '<div class="alert alert-primary" style="width:450px;"><p class="h3 text-center">No registra actividad</p></div>';
 
       exit;
 
