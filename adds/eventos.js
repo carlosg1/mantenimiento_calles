@@ -51,4 +51,11 @@ $(document).ready(function(){
         }
     });
 
+    // mi-control-layer-container
+    $("#mi-control-layer-container").click(function(ev){
+        console.log(ev);
+        ev.stopPropagation();
+    });
+
+
 });

@@ -116,8 +116,6 @@
     <body>
         <button type="button" class="btn btn-info salir" id="btnSalir">Salir</button>
 
-        
-
         <!-- Cuadro para el infowindow -->
         <div class="infor">
             <div class="card">
@@ -133,27 +131,25 @@
         </div>
         <!-- Cuadro para el infowindow -->
 
-
         <!-- // contenedor mapa -->
         <div id="map">
-            
 
             <!-- mi control de capas -->
-            <div class="leaflet-control-container">
+            <div class="leaflet-control-container" id="mi-control-layer-container">
                 <div class="leaflet-top leaflet-right">
-                   
+
                     <div class="leaflet-control-layers leaflet-control-layers-expanded leaflet-control" aria-haspopup="true" style="margin-top:3.875rem">
                         <form class="leaflet-control-layers-list">
                             <div class="leaflet-control-layers-base">
                                 <label>
                                     <div>
-                                        <input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers" checked="checked">
-                                        <span>Caba pase GIS MCC</span>
+                                        <input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers" checked="checked" id="cbGisMcc">
+                                        <span>Capa pase GIS MCC</span>
                                     </div>
                                 </label>
                                 <label>
                                     <div>
-                                        <input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers">
+                                        <input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers" id="cbGoogleSatelital">
                                         <span>Google Satelital</span>
                                     </div>
                                 </label>
@@ -250,7 +246,6 @@
             </div>
             <!-- // mi control de capas -->
 
-
         </div>
         <!-- // contenedor mapa -->
         
@@ -321,18 +316,6 @@
             identify: false,
         });
 /*
-        var servicioWMS = new wms_GIS("http://172.25.8.80:8080/geoserver/mantenimiento_calle_2019/wms?", {
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            version: '1.3.0',
-            continuousWorld : true,
-            tiled: true,
-            attribution: "Direccion Gral de GIS",
-            info_format: 'application/json',
-            opacity: 1
-        });
-*/
         var WMSprod = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", {
             format: 'image/png',
             uppercase: true,
@@ -345,7 +328,7 @@
             opacity: 1,
             cql_filter: "fecha_servicio BETWEEN '2019-12-31'"
         });
-
+*/
         var serverWms = "http://190.7.30.142:8282/geoserver/wms?";
 
         var opcionMapa = {
