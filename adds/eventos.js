@@ -42,4 +42,13 @@ $(document).ready(function(){
         }
     });
 
+    // seguimiento bacheo
+    $("#chkBacheo").click(function(ev){
+        if(this.checked){
+            vw_seguimiento_bacheo_2020.addTo(map);
+        }else{
+            map.removeLayer(vw_seguimiento_bacheo_2020);
+        }
+    });
+
 });

@@ -92,6 +92,10 @@
                 color: #007E33;
                 font-weight: 600;
             }
+            .bache {
+                color: #000;
+                font-weight: 600;
+            }
             .fecha-slider {
                 bottom: 2.1rem;
                 right: 6.625rem;
@@ -228,6 +232,17 @@
                                         </span>
                                     </div>
                                 </label>
+
+                                <div class="leaflet-control-layers-separator"></div>
+
+                                <label> <!-- bacheo -->
+                                    <div>
+                                        <input type="checkbox" class="leaflet-control-layers-selector" name="chkBacheo" id="chkBacheo">
+                                        <span>
+                                            <span class="bache">Bacheo</span>
+                                        </span>
+                                    </div>
+                                </label>
                             </div>
                         </form>
                     </div>
@@ -349,29 +364,31 @@
 
 
         // perfilado de calles
-        var vw_servicio_publico_perfilado = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
+        var vw_servicio_publico_perfilado = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_perfilado");
 
         // ensanchamiento
-        var vw_servicio_publico_ensanchamiento = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
+        var vw_servicio_publico_ensanchamiento = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_ensanchamiento");
 
         // aporte de suelo
-        var vw_servicio_publico_aporte_suelo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
+        var vw_servicio_publico_aporte_suelo = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_aporte_suelo");
 
         // cuneteo 
-        var vw_servicio_publico_cuneteo = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_cuneteo1");
+        var vw_servicio_publico_cuneteo = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_cuneteo1");
         
         // desbarre de calle
-        var vw_servicio_publico_desbarre_de_calle = new wms_GIS("http://192.168.10.51:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
+        var vw_servicio_publico_desbarre_de_calle = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_servicio_publico_desbarre_de_calle");
 
         // alumbrado publico
         var vw_visor_alumbrado_publico = new wms_GIS(serverWms, opcionMapa).getLayer("infraestructura:vw_visor_alumbrado_publico");
 
         // colocacion de tubos
-        var vw_visor_colocacion_tubo_acdom = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
-
+        var vw_visor_colocacion_tubo_acdom = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_acdom");
 
         // cruce de calle
-        var vw_visor_colocacion_tubo_crucecalle = new wms_GIS("http://190.7.30.142:8282/geoserver/wms?", opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
+        var vw_visor_colocacion_tubo_crucecalle = new wms_GIS(serverWms, opcionMapa).getLayer("servicio_publico_20:vw_visor_colocacion_tubo_crucecalle");
+
+        // bacheo
+        vw_seguimiento_bacheo_2020 = new wms_GIS(serverWms, opcionMapa).getLayer("obras_municipales:vw_obras_de_bacheo");
 
 
         var osmGeocoder = new L.Control.OSMGeocoder({
